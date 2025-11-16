@@ -1,0 +1,101 @@
+/* Neumorphic User Profile Styles */
+
+.user-profile-container {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.neumorphic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.neumorphic-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.neumorphic-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.neumorphic-input {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #e0e5ec;
+  box-shadow: inset 4px 4px 6px #c8ccd1, inset -4px -4px 6px #f0f5fa;
+  font-size: 14px;
+  color: #333;
+  transition: 0.3s;
+}
+
+.neumorphic-input:focus {
+  outline: none;
+  box-shadow: inset 4px 4px 6px #c8ccd1, inset -4px -4px 6px #f0f5fa, 0 0 0 2px #4a90e2;
+}
+
+.neumorphic-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.neumorphic-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: #e0e5ec;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 6px 6px 10px #c2c8d0, -6px -6px 10px #ffffff;
+  transition: 0.3s;
+  color: #333;
+  font-size: 14px;
+}
+
+.neumorphic-btn.primary {
+  background: #4a90e2;
+  color: #fff;
+  box-shadow: 6px 6px 10px #3a7bc8, -6px -6px 10px #5aa5fc;
+}
+
+.neumorphic-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.neumorphic-alert.success {
+  background: #e8f5e8;
+  color: #4caf50;
+  box-shadow: inset 2px 2px 4px #d4e8d4, inset -2px -2px 4px #fcfffc;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.neumorphic-alert.error {
+  background: #ffebee;
+  color: #c62828;
+  box-shadow: inset 2px 2px 4px #ffcdd2, inset -2px -2px 4px #ffffff;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .user-profile-container {
+    padding: 10px;
+  }
+  .neumorphic-container {
+    padding: 15px;
+  }
+} 

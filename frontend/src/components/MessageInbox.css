@@ -1,0 +1,51 @@
+/* Neumorphic Message Inbox Styles */
+
+.message-inbox-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.message-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: #e0e5ec;
+  box-shadow: 8px 8px 24px #c2c8d0, -8px -8px 24px #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message-content {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.message-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .message-inbox-container {
+    padding: 10px;
+  }
+  .message-card {
+    padding: 12px;
+  }
+  .message-meta {
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+} 
