@@ -20,6 +20,6 @@ COPY . .
 # Expose port
 EXPOSE 5000
 
-# Production command (update this based on your actual entry point)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "4"]
- 
+# Default command (update this based on your actual entry point)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+

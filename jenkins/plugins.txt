@@ -1,0 +1,19 @@
+# Jenkins Plugins
+workflow-aggregator
+docker-workflow
+docker-plugin
+git
+github
+blueocean
+pipeline-stage-view
+credentials-binding
+ssh-slaves
+ws-cleanup
+timestamper
+build-timeout
+email-ext
+htmlpublisher
+junit
+coverage
+warnings-ng
+
