@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = credentials('docker-registry-url') ?: 'localhost:5000'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         DOCKER_COMPOSE_FILE = 'docker-compose.prod.yml'
     }
@@ -12,6 +11,13 @@ pipeline {
             steps {
                 checkout scm
                 script {
+                    // Set Docker registry with default fallback
+                    try {
+                        env.DOCKER_REGISTRY = credentials('docker-registry-url')
+                    } catch (Exception e) {
+                        env.DOCKER_REGISTRY = 'localhost:5000'
+                    }
+                    
                     if (isUnix()) {
                         env.GIT_COMMIT_SHORT = sh(
                             script: 'git rev-parse --short HEAD',
