@@ -47,6 +47,7 @@ pipeline {
                 stage('Python Lint') {
                     steps {
                         dir('analysis-engine') {
+                            sh 'pip install --upgrade pip setuptools wheel || true'
                             sh 'pip install flake8 black || true'
                             sh 'flake8 . --max-line-length=120 --ignore=E501,W503 || true'
                         }
@@ -76,6 +77,7 @@ pipeline {
                 stage('Python Tests') {
                     steps {
                         dir('analysis-engine') {
+                            sh 'pip install --upgrade pip setuptools wheel'
                             sh 'pip install -r requirements.txt'
                             sh 'pytest --cov=. --cov-report=xml || true'
                         }
