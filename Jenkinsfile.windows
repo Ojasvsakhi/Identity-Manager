@@ -8,30 +8,30 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                checkout scm
-                script {
-                    // Set Docker registry with default fallback
-                    try {
-                        env.DOCKER_REGISTRY = credentials('docker-registry-url')
-                    } catch (Exception e) {
-                        env.DOCKER_REGISTRY = 'localhost:5000'
-                    }
-                    
-                    if (isUnix()) {
-                        env.GIT_COMMIT_SHORT = sh(
-                            script: 'git rev-parse --short HEAD',
-                            returnStdout: true
-                        ).trim()
-                    } else {
-                        env.GIT_COMMIT_SHORT = bat(
-                            script: 'git rev-parse --short HEAD',
-                            returnStdout: true
-                        ).trim()
-                    }
-                }
+    steps {
+        checkout scm
+        script {
+
+            // Load docker registry URL from Jenkins credentials (Secret Text)
+            withCredentials([string(credentialsId: 'docker-registry-url', variable: 'REGISTRY')]) {
+                env.DOCKER_REGISTRY = REGISTRY
+            }
+
+            if (isUnix()) {
+                env.GIT_COMMIT_SHORT = sh(
+                    script: 'git rev-parse --short HEAD',
+                    returnStdout: true
+                ).trim()
+            } else {
+                env.GIT_COMMIT_SHORT = bat(
+                    script: 'git rev-parse --short HEAD',
+                    returnStdout: true
+                ).trim()
             }
         }
+    }
+}
+
 
         stage('Lint & Code Quality') {
             parallel {
