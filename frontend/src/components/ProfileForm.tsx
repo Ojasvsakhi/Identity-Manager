@@ -4,7 +4,6 @@ import './ProfileForm.css';
 
 // Constants for dropdown options
 const GENDERS = ['Male', 'Female', 'Other'];
-const MARITAL_STATUSES = ['Single', 'Married', 'Divorced', 'Widowed'];
 const CASTES = ['General', 'OBC', 'SC', 'ST', 'Other'];
 
 const INDIAN_ENGINEERING_COLLEGES = [
@@ -84,7 +83,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
     age: '',
     gender: '',
     education: '',
-    maritalStatus: '',
+    maritalStatus: 'Single',
     caste: '',
     occupation: '',
     location: '',
@@ -177,12 +176,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
             <label className="neumorphic-label">Gender</label>
             <select className="neumorphic-input" name="gender" value={formData.gender} onChange={handleSelectChange}>
               {GENDERS.map(g => <option key={g} value={g}>{g}</option>)}
-            </select>
-          </div>
-          <div className="neumorphic-form-group">
-            <label className="neumorphic-label">Marital Status</label>
-            <select className="neumorphic-input" name="maritalStatus" value={formData.maritalStatus} onChange={handleSelectChange}>
-              {MARITAL_STATUSES.map(m => <option key={m} value={m}>{m}</option>)}
             </select>
           </div>
           <div className="neumorphic-form-group">

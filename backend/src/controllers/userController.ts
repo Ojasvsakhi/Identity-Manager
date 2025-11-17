@@ -390,7 +390,7 @@ export const userController = {
   async updateSettings(req: Request, res: Response) {
     try {
       const userId = (req as any).user.id;
-      const { name, email } = req.body;
+      const { name, email, username } = req.body;
 
       const user = await userRepository.findOne({
         where: { id: userId }
@@ -410,9 +410,19 @@ export const userController = {
         }
       }
 
+      if (username && username !== user.username) {
+        const existingUserWithUsername = await userRepository.findOne({
+          where: { username }
+        });
+        if (existingUserWithUsername) {
+          return res.status(400).json({ message: 'Username is already taken' });
+        }
+      }
+
       // Update user fields
       if (name) user.name = name;
       if (email) user.email = email;
+      if (username) user.username = username;
 
       await userRepository.save(user);
 

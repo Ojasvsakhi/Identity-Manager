@@ -238,12 +238,13 @@
 
 .neumorphic-modal-content {
   background: #e0e5ec;
-  border-radius: 20px;
-  box-shadow: 10px 10px 30px #c2c8d0, -10px -10px 30px #ffffff;
-  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 6px 6px 16px rgba(163, 177, 198, 0.55), -4px -4px 12px rgba(255, 255, 255, 0.85);
+  padding: 28px;
   max-width: 400px;
   width: 90%;
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .neumorphic-modal-content h3 {

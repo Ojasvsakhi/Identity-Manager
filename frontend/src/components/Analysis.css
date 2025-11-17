@@ -20,6 +20,34 @@
   font-size: 1rem;
 }
 
+.analysis-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.analysis-metric-card {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: #e0e5ec;
+  box-shadow: inset 4px 4px 8px #c2c8d0, inset -4px -4px 8px #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
 .analysis-charts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -104,6 +132,29 @@
 
 .neumorphic-table td {
   color: #555;
+}
+
+.analysis-insights {
+  margin-top: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: #e0e5ec;
+  box-shadow: inset 4px 4px 10px #c2c8d0, inset -4px -4px 10px #ffffff;
+}
+
+.analysis-insights h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+}
+
+.analysis-insights ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #555;
+}
+
+.analysis-insights li {
+  margin-bottom: 8px;
 }
 
 @media (max-width: 900px) {

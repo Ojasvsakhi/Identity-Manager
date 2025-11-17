@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../services/api';
-import { profileService } from '../services/api';
 import './Settings.css';
 
 const Settings: React.FC = () => {
@@ -12,9 +11,6 @@ const Settings: React.FC = () => {
   const [success, setSuccess] = useState('');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deletePassword, setDeletePassword] = useState('');
-  const [pinDialogOpen, setPinDialogOpen] = useState(false);
-  const [pin, setPin] = useState('');
-  const [pinError, setPinError] = useState('');
 
   // Settings form state
   const [settings, setSettings] = useState({
@@ -33,13 +29,14 @@ const Settings: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const profileData = await profileService.getUserProfile();
+        const userData = await userService.getCurrentUser();
         setSettings({
-          name: profileData.name || '',
-          email: profileData.email || '',
-          username: profileData.name || ''
+          name: userData.name || '',
+          email: userData.email || '',
+          username: userData.username || ''
         });
       } catch (error) {
+        console.error('Settings load error:', error);
         setError('Failed to load user data');
       } finally {
         setIsInitialLoading(false);
@@ -68,10 +65,20 @@ const Settings: React.FC = () => {
     setError('');
     setSuccess('');
     try {
-      await userService.updateSettings(settings);
-      setSuccess('Settings updated successfully');
+      const response = await userService.updateSettings(settings);
+      setSuccess(response.message || 'Settings updated successfully');
+      setSettings({
+        name: response.user.name || '',
+        email: response.user.email || '',
+        username: response.user.username || ''
+      });
     } catch (error) {
-      setError('Failed to update settings');
+      console.error('Update settings error:', error);
+      if (error instanceof Error) {
+        setError(error.message || 'Failed to update settings');
+      } else {
+        setError('Failed to update settings');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -109,6 +116,7 @@ const Settings: React.FC = () => {
     try {
       await userService.deleteAccount(deletePassword);
       setDeleteDialogOpen(false);
+      setDeletePassword('');
       localStorage.removeItem('token');
       navigate('/login');
     } catch (error) {

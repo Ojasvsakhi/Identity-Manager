@@ -188,22 +188,22 @@ export const authService = {
 
 export const userService = {
   async getCurrentUser() {
-    const response = await api.get<{ user: User }>('/users/profile');
+    const response = await api.get<{ user: User }>('/profile');
     return response.data.user;
   },
 
-  async updateSettings(settings: { name?: string; email?: string }) {
-    const response = await api.put<User>('/users/settings', settings);
+  async updateSettings(settings: { name?: string; email?: string; username?: string }): Promise<{ message: string; user: User }> {
+    const response = await api.put<{ message: string; user: User }>('/settings', settings);
     return response.data;
   },
 
   async updatePassword(currentPassword: string, newPassword: string) {
-    const response = await api.put('/users/password', { currentPassword, newPassword });
+    const response = await api.put('/password', { currentPassword, newPassword });
     return response.data;
   },
 
   async deleteAccount(password: string) {
-    const response = await api.delete('/users/account', { data: { password } });
+    const response = await api.delete('/account', { data: { password } });
     return response.data;
   },
 

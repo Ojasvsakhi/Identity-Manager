@@ -2,15 +2,17 @@ import { Profile } from '../entities/Profile';
 import { AppDataSource } from '../data-source';
 import { Like } from 'typeorm';
 
-const profileRepository = AppDataSource.getRepository(Profile);
+const getProfileRepository = () => AppDataSource.getRepository(Profile);
 
 export const profileService = {
   async createProfile(profileData: Partial<Profile>): Promise<Profile> {
+    const profileRepository = getProfileRepository();
     const profile = profileRepository.create(profileData);
     return await profileRepository.save(profile);
   },
 
   async getProfile(id: string): Promise<Profile> {
+    const profileRepository = getProfileRepository();
     const profile = await profileRepository.findOne({ where: { id } });
     if (!profile) {
       throw new Error('Profile not found');
@@ -20,16 +22,19 @@ export const profileService = {
 
   async updateProfile(id: string, profileData: Partial<Profile>): Promise<Profile> {
     const profile = await this.getProfile(id);
+    const profileRepository = getProfileRepository();
     Object.assign(profile, profileData);
     return await profileRepository.save(profile);
   },
 
   async deleteProfile(id: string): Promise<void> {
     const profile = await this.getProfile(id);
+    const profileRepository = getProfileRepository();
     await profileRepository.remove(profile);
   },
 
   async getAllProfiles(): Promise<Profile[]> {
+    const profileRepository = getProfileRepository();
     return await profileRepository.find();
   },
 
@@ -62,6 +67,7 @@ export const profileService = {
       }
     }
 
+    const profileRepository = getProfileRepository();
     return await profileRepository.find({ where });
   }
 };

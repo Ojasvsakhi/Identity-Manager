@@ -12,7 +12,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
     "migration:run": "ts-node src/migration-runner.ts",
-    "migration:revert": "npm run typeorm migration:revert -- -d src/data-source.ts"
+    "migration:revert": "npm run typeorm migration:revert -- -d src/data-source.ts",
+    "seed:mock": "ts-node src/scripts/seedMockData.ts"
   },
   "keywords": [],
   "author": "",
