@@ -2,12 +2,21 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Install ALL dependencies (including dev) to build TypeScript
 COPY package*.json ./
-RUN npm install --production
+RUN npm install
 
+# Copy source code
 COPY . .
+
+# Build TypeScript into JS in /dist
 RUN npm run build
 
+# Remove dev dependencies for smaller final image
+RUN npm prune --production
+
+# Expose backend port
 EXPOSE 3000
 
-CMD ["npm", "start"] 
+# Start production build
+CMD ["node", "dist/index.js"]

@@ -4,7 +4,7 @@
   "description": "Backend server for profile management and data analysis system",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "test": "jest",
