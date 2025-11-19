@@ -21,7 +21,7 @@ const MessageInbox: React.FC = () => {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8000/api/messages', {
+        const response = await axios.get('http://localhost:3000/api/messages', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessages(response.data);

@@ -14,11 +14,11 @@ import { authenticateToken } from './middleware/auth';
 dotenv.config();
 
 const app = express();
-const PORT = parseInt(process.env.PORT || '8000', 10);
+const PORT = parseInt(process.env.PORT || '3000', 10);
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow frontend to access
+  origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:80','http://localhost:3002'], // Allow frontend to access
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

@@ -17,7 +17,7 @@ app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 
 // Initialize database and start server
-const PORT = process.env.PORT || 8000;
+const PORT = parseInt(process.env.PORT || '3000', 10);
 
 AppDataSource.initialize()
     .then(() => {

@@ -19,5 +19,5 @@ export const typeormConfig: DataSourceOptions = {
     entities: [User, Profile, Message],
     migrations: [path.join(__dirname, "../migrations/*.{ts,js}")],
     subscribers: [],
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    ssl: false
 }; 

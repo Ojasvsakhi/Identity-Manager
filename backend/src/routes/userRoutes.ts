@@ -18,5 +18,6 @@ router.post('/send-message', authMiddleware, userController.sendMessage);
 router.get('/messages', authMiddleware, userController.getMessages);
 router.post('/bookmark', authMiddleware, userController.bookmarkProfile);
 router.get('/bookmarks', authMiddleware, userController.getBookmarkedProfiles);
+router.post('/request-access', authMiddleware, userController.requestAccess);
 
 export default router; 

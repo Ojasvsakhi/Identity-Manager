@@ -19,7 +19,7 @@ const MessageForm: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:8000/api/send-message',
+        'http://localhost:3000/api/send-message',
         { recipientProfileId, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

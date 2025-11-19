@@ -456,5 +456,41 @@ export const userController = {
       console.error('Error fetching all users:', error);
       res.status(500).json({ message: 'Error fetching users' });
     }
+  },
+
+  async requestAccess(req: Request, res: Response) {
+    try {
+      const { profileId } = req.body;
+      const userId = (req as any).user?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      
+      if (!profileId) {
+        return res.status(400).json({ message: 'Missing profileId' });
+      }
+
+      const profileRepo = req.app.get('dataSource').getRepository(Profile);
+      const profile = await profileRepo.findOne({ where: { id: profileId } });
+      
+      if (!profile) {
+        return res.status(404).json({ message: 'Profile not found' });
+      }
+
+      // Send a message to the profile owner requesting access
+      const messageRepo = req.app.get('dataSource').getRepository(Message);
+      const message = messageRepo.create({
+        content: `Access request: I would like to view your profile`,
+        senderId: userId,
+        recipientProfileId: profileId,
+      });
+      
+      await messageRepo.save(message);
+      return res.status(201).json({ message: 'Access request sent successfully' });
+    } catch (error) {
+      console.error('Request access error:', error);
+      return res.status(500).json({ message: 'Failed to send access request' });
+    }
   }
-}; 
+};

@@ -41,8 +41,30 @@ const ProfileView: React.FC = () => {
     }
   };
 
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
+  const toggleBookmark = async () => {
+    if (!profile) return;
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/bookmark', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ profileId: profile.id })
+      });
+
+      if (response.ok) {
+        setIsBookmarked(!isBookmarked);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to bookmark profile');
+      }
+    } catch (err) {
+      setError('Error bookmarking profile');
+      console.error(err);
+    }
   };
 
   if (loading) {

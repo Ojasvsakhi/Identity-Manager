@@ -2,17 +2,23 @@ version: '3.8'
 
 services:
   frontend:
-    image: ${DOCKER_REGISTRY}/identity-manager-frontend:${IMAGE_TAG}
+    image: mricognito/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
     ports:
       - "80:80"
     depends_on:
       - backend
     environment:
-      - REACT_APP_API_URL=http://api.yourdomain.com
-      - REACT_APP_ANALYSIS_URL=http://analysis.yourdomain.com
+      - REACT_APP_API_URL=http://localhost:3000
+      - REACT_APP_ANALYSIS_URL=http://localhost:5000
 
   backend:
-    image: ${DOCKER_REGISTRY}/identity-manager-backend:${IMAGE_TAG}
+    image: mricognito/backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
     ports:
       - "3000:3000"
     depends_on:
@@ -22,18 +28,23 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USERNAME=postgres
-      - DB_PASSWORD=your_secure_password
-      - DB_DATABASE=profiles_db
+      - DB_PASSWORD=Ojasv@123
+      - DB_NAME=profiles_db
       - JWT_SECRET=your_jwt_secret
-      - DB_SSL=false
+      - PORT=3000
 
   analysis-engine:
-    image: ${DOCKER_REGISTRY}/identity-manager-analysis:${IMAGE_TAG}
+    image: mricognito/analysis:latest
+    build:
+      context: ./analysis-engine
+      dockerfile: Dockerfile.prod
     ports:
       - "5000:5000"
     environment:
       - NODE_ENV=production
       - MODEL_PATH=/app/models
+    profiles:
+      - donotstart
 
   db:
     image: postgres:14-alpine

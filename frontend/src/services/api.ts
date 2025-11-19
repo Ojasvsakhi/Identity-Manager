@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -22,7 +22,23 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    // Normalize the request path and ignore auth redirects for explicit auth endpoints
+    const requestUrl = error.config?.url || '';
+    const base = error.config?.baseURL || '';
+    let normalizedPath = requestUrl;
+    try {
+      // Build a full URL using baseURL if provided then get the pathname
+      normalizedPath = new URL(requestUrl, base).pathname;
+    } catch (e) {
+      // keep raw url if we can't create URL object
+      normalizedPath = requestUrl;
+    }
+
+    // Consider the endpoint an auth attempt if path matches login or register (with or without /api prefix)
+    const isAuthAttempt = /\/(api\/)?(login|register)($|\/)/.test(normalizedPath);
+
+    if (status === 401 && !isAuthAttempt) {
       localStorage.removeItem('token');
       window.location.href = '/login';
     }

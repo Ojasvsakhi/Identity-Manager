@@ -2,9 +2,11 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install ALL dependencies (including dev) to build TypeScript
+# Copy only package files first for better caching
 COPY package*.json ./
-RUN npm install
+
+# Use npm ci for cleaner, faster installs in Docker
+RUN npm ci
 
 # Copy source code
 COPY . .

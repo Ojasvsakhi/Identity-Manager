@@ -47,9 +47,31 @@ const ProfileList: React.FC = () => {
     setSelectedProfile(null);
   };
 
-  const handleSendRequest = () => {
-    setError('Access request sent successfully');
-    handleCloseDialog();
+  const handleSendRequest = async () => {
+    if (!selectedProfile) return;
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/request-access', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ profileId: selectedProfile.id })
+      });
+
+      if (response.ok) {
+        setError('Access request sent successfully');
+        handleCloseDialog();
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to send access request');
+      }
+    } catch (err) {
+      setError('Error sending access request');
+      console.error(err);
+    }
   };
 
   const filteredProfiles = profiles.filter(profile =>

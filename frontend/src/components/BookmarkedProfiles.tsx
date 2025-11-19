@@ -23,7 +23,7 @@ const BookmarkedProfiles: React.FC = () => {
     const fetchBookmarkedProfiles = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8000/api/bookmarks', {
+        const response = await axios.get('http://localhost:3000/api/bookmarks', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProfiles(response.data);
